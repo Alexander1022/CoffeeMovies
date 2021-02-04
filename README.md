@@ -1,7 +1,7 @@
 # CoffeeMovies
 
 CoffeeMovies is Progressive Web Application. I made it simple. There are movie panels and a search bar. 
-![](https://alexander1022.github.io/CoffeeMovies/)
+[Coffee Movies](https://alexander1022.github.io/CoffeeMovies/)
 
 ## Usage on desktop
 
