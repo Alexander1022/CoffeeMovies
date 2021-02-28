@@ -3,6 +3,7 @@
     <head>
         <title>Coffee Movies</title>
         <meta charset="UTF-8">
+        <link rel="canonical" href="https://alexander1022.github.io/CoffeeMovies/" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/style.css">
         <script src="app.js" defer></script>
@@ -16,6 +17,13 @@
     <body class="fullscreen">
         <div class="nav">
             <h1>Coffee Movies ☕</h1>
+            <script>
+                if(navigator.serviceWorker)
+                {
+                    navigator.serviceWorker.register('/CoffeeMovies/sw.js', {scope: '/CoffeeMovies/'})
+                }
+
+            </script>
             <p>Search for your movies while drinking coffee</p>
             <form id="form">
                 <input

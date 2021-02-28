@@ -1,25 +1,65 @@
-var cacheName = 'hello-pwa';
-var filesToCache = [
-  '/',
-  '/index.html',
-  '/style.css',
-  '/app.js'
-];
+var APP_PREFIX = 'CoffeeMovies'
+var VERSION = '_1.0.0'              
+var CACHE_NAME = APP_PREFIX + VERSION
+var URLS = [                            
+  '/CoffeeMovies/',                     
+  '/CoffeeMovies/index.html',
+  '/CoffeeMovies/css/style.css',
+  '/CoffeeMovies/images'           
+]
 
-/* Start the service worker and cache all of the app's content */
-self.addEventListener('install', function(e) {
-  e.waitUntil(
-    caches.open(cacheName).then(function(cache) {
-      return cache.addAll(filesToCache);
-    })
-  );
-});
-
-/* Serve cached content when offline */
-self.addEventListener('fetch', function(e) {
+// Respond with cached resources
+self.addEventListener('fetch', function (e) 
+{
+  console.log('fetch request : ' + e.request.url)
   e.respondWith(
-    caches.match(e.request).then(function(response) {
-      return response || fetch(e.request);
+    caches.match(e.request).then(function (request) 
+    {
+      if (request) 
+      { 
+        console.log('responding with cache : ' + e.request.url)
+        return request
+      } 
+      else 
+      {     
+        console.log('file is not cached, fetching : ' + e.request.url)
+        return fetch(e.request)
+      }
     })
-  );
-});
+  )
+})
+
+self.addEventListener('install', function (e) 
+{
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(function (cache) 
+    {
+      console.log('installing cache : ' + CACHE_NAME)
+      return cache.addAll(URLS)
+    })
+  )
+})
+
+self.addEventListener('activate', function (e) 
+{
+  e.waitUntil(
+    caches.keys().then(function (keyList) 
+    {
+      var cacheWhitelist = keyList.filter(function (key) 
+      {
+        return key.indexOf(APP_PREFIX)
+      })
+
+      cacheWhitelist.push(CACHE_NAME)
+
+      return Promise.all(keyList.map(function (key, i) 
+      {
+        if (cacheWhitelist.indexOf(key) === -1) 
+        {
+          console.log('deleting cache : ' + keyList[i] )
+          return caches.delete(keyList[i])
+        }
+      }))
+    })
+  )
+})
