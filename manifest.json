@@ -1,8 +1,8 @@
 {
     "name": "Coffee Movies",
     "short_name": "Coffee Movies",
-    "theme_color": "#6b3e2e",
-    "background_color": "#6b3e2e",
+    "theme_color": "#654335",
+    "background_color": "#654335",
     "display": "fullScreen",
     "orientation": "portrait",
     "scope": "/",
